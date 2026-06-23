@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: file:;">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Label Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="material-background" aria-hidden="true">
+    <div class="glow glow-left"></div>
+    <div class="glow glow-right"></div>
+    <div class="glow glow-bottom"></div>
+  </div>
+
+  <main class="splash-shell">
+    <section class="splash-card">
+      <div class="content-row">
+        <section class="text-column">
+          <div class="logo brand-logo" aria-label="Label Studio"><img class="brand-mark" src="../../assets/logo.svg" alt=""><span class="brand-wordmark">Label Studio</span></div>
+          <div class="eyebrow">DESKTOP&nbsp;&nbsp; CLIENT</div>
+          <div class="accent-mark"></div>
+          <h1 id="title">Preparing Runtime</h1>
+          <div class="progress-track main-progress"><div id="fill" class="progress-fill"></div></div>
+          <div id="progressValue" class="progress-value">0%</div>
+          <p id="detail">Verifying the bundled Python runtime and packaged resources.</p>
+          <div id="download" class="download-status hidden"></div>
+          <div class="progress-track download-progress hidden"><div id="downloadFill" class="progress-fill"></div></div>
+          <div id="downloadProgressValue" class="progress-value download-progress-value hidden">0%</div>
+          <button id="downloadPause" class="download-button hidden" title="Pause download" type="button"></button>
+          <button id="downloadCancel" class="download-button hidden" title="Cancel download" type="button"></button>
+        </section>
+
+        <section class="column-padding-view" aria-hidden="true"></section>
+        <section class="artwork-column" aria-hidden="true">
+          <div class="artwork-layer">
+            <img class="opossum-background" src="../../assets/opossumBackground.svg" alt="">
+            <img class="opossum-looking" src="../../assets/opossumLooking.svg" alt="">
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="renderer.js"></script>
+</body>
+</html>

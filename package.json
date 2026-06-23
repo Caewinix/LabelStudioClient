@@ -1,0 +1,101 @@
+{
+    "name": "label-studio",
+    "version": "0.0.1-beta",
+    "description": "Electron + TypeScript conversion of the Swift Label Studio launcher. Chromium/CEF runtime logic is replaced by Electron runtime checking.",
+    "main": "dist/main/main.js",
+    "scripts": {
+        "build": "rm -rf dist/renderer && node ./node_modules/typescript/lib/tsc.js -p tsconfig.json && find src/renderer -type f \\( -name '*.html' -o -name '*.css' \\) -exec sh -c 'mkdir -p dist/renderer/$(dirname \"${1#src/renderer/}\") && cp \"$1\" dist/renderer/${1#src/renderer/}' _ {} \\; && rm -rf dist/assets dist/python dist/Assets dist/Python && cp -R assets dist/assets && mkdir -p dist/python && find Python -maxdepth 1 -type f -name '*.py' -exec cp {} dist/python/ \\;",
+        "start": "node scripts/brand-dev-electron.js && npm run build && electron .",
+        "dev": "npm run start",
+        "typecheck": "node ./node_modules/typescript/lib/tsc.js -p tsconfig.json --noEmit",
+        "pack:mac": "npm run build && node scripts/run-electron-builder.js --mac dir --universal",
+        "dist:mac": "npm run build && node scripts/run-electron-builder.js --mac dmg --universal",
+        "pack:win": "npm run build && node scripts/run-electron-builder.js --win dir",
+        "dist:win": "npm run build && node scripts/run-electron-builder.js --win nsis",
+        "pack:linux": "npm run build && node scripts/run-electron-builder.js --linux dir",
+        "dist:linux": "npm run build && node scripts/run-electron-builder.js --linux tar.gz",
+        "pack:all": "npm run pack:mac && npm run pack:win && npm run pack:linux",
+        "dist:all": "npm run dist:mac && npm run dist:win && npm run dist:linux",
+        "clean": "rm -rf dist release .runtime Runtime runtime .runtime-cache cache node_modules package-lock.json"
+    },
+    "devDependencies": {
+        "@types/node": "^22.13.14",
+        "electron": "37.10.3",
+        "electron-builder": "^26.0.12",
+        "typescript": "^5.8.3"
+    },
+    "build": {
+        "appId": "io.codex.labelstudio",
+        "productName": "Label Studio",
+        "directories": {
+            "output": "release"
+        },
+        "files": [
+            "dist/**/*",
+            "icons/**/*",
+            "package.json"
+        ],
+        "mac": {
+            "icon": "icons/logo.icns",
+            "target": [
+                {
+                    "target": "dir",
+                    "arch": [
+                        "universal"
+                    ]
+                },
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "universal"
+                    ]
+                }
+            ],
+            "category": "public.app-category.developer-tools",
+            "extraResources": [
+                {
+                    "from": "Assets",
+                    "to": "Assets"
+                },
+                {
+                    "from": "Python",
+                    "to": "Python"
+                }
+            ]
+        },
+        "win": {
+            "icon": "icons/logo.ico",
+            "extraResources": [
+                {
+                    "from": "assets",
+                    "to": "assets"
+                },
+                {
+                    "from": "python",
+                    "to": "python"
+                }
+            ]
+        },
+        "linux": {
+            "icon": "icons/linux/logo.svg",
+            "target": [
+                {
+                    "target": "dir"
+                },
+                {
+                    "target": "tar.gz"
+                }
+            ],
+            "extraResources": [
+                {
+                    "from": "assets",
+                    "to": "assets"
+                },
+                {
+                    "from": "python",
+                    "to": "python"
+                }
+            ]
+        }
+    }
+}

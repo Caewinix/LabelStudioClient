@@ -1,0 +1,902 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.64);
+  --accent: #ff9500;
+  --accent-soft: rgba(255, 149, 0, 0.14);
+  --accent-border: rgba(255, 149, 0, 0.34);
+
+  --pad: 24px;
+  --gap: 14px;
+  --radius: 16px;
+
+  --hero-min: 92px;
+  --summary-min: 82px;
+}
+
+html {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 149, 0, 0.10), transparent 30%),
+    linear-gradient(180deg, #151515 0%, #101010 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.update-shell {
+  width: 100%;
+  height: 100vh;
+  min-width: 0;
+  padding: var(--pad);
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  align-items: stretch;
+  max-width: none;
+  margin: 0;
+}
+
+.update-shell::-webkit-scrollbar {
+  width: 10px;
+}
+
+.update-shell::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.update-shell::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+  background-color: rgba(255, 255, 255, 0.24);
+}
+
+.titlebar-card,
+.summary-card,
+.updates-card {
+  flex: 1 0 auto;
+  align-self: stretch;
+  width: 100%;
+  min-width: 0;
+  min-height: max-content;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(38, 38, 38, 0.96), rgba(28, 28, 28, 0.96));
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.20);
+}
+
+/*
+  Header layout:
+  the card is a normal max-content grid item. Nothing is absolutely positioned,
+  nothing is clipped, and the parent row is max-content. Therefore the border
+  must wrap the full height of .title-copy.
+*/
+.titlebar-card {
+  min-height: var(--hero-min);
+  height: auto;
+  display: grid;
+  grid-template-columns: minmax(230px, 0.48fr) minmax(0, 0.52fr);
+  grid-auto-rows: max-content;
+  align-items: center;
+  align-content: center;
+  gap: 24px;
+  padding: 18px 30px;
+  overflow: visible;
+}
+
+.app-logo {
+  width: 230px;
+  max-width: 100%;
+  max-height: 42px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.title-copy {
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding-left: 24px;
+  border-left: 1px solid var(--line-strong);
+  overflow: visible;
+  contain: none;
+}
+
+.title-copy h1 {
+  margin: 0;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  white-space: normal;
+  overflow: visible;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  max-height: none;
+}
+
+.title-copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: normal;
+  overflow: visible;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  max-height: none;
+}
+
+.summary-card {
+  min-height: var(--summary-min);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-main {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+}
+
+.summary-icon,
+.component-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.summary-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 18px;
+}
+
+.label {
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.app-version {
+  margin-bottom: 4px;
+  color: var(--text);
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.subtext,
+.component-description {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.updates-card {
+  height: auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: stretch;
+  overflow: hidden;
+}
+
+.updates-header {
+  min-width: 0;
+  padding: 12px 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  align-items: center;
+  align-content: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.updates-title {
+  min-width: 0;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.updates-subtitle {
+  min-width: 0;
+  max-width: 100%;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: right;
+  white-space: normal;
+}
+
+.component-list {
+  align-self: stretch;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.component-row {
+  flex: 1 0 auto;
+  align-self: stretch;
+  min-width: 0;
+  height: auto;
+  min-height: max-content;
+  max-height: none;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) minmax(82px, max-content) 92px minmax(86px, max-content);
+  grid-template-areas:
+    "icon text version button check"
+    "progress progress progress progress progress";
+  grid-template-rows: max-content max-content;
+  align-items: center;
+  align-content: center;
+  gap: 18px;
+  row-gap: 0;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--line);
+  transition:
+    padding-top 220ms ease,
+    padding-bottom 220ms ease,
+    background-color 180ms ease;
+}
+
+.component-row.component-row-active {
+  background: rgba(255, 149, 0, 0.045);
+}
+
+.component-row.has-inline-status {
+  row-gap: 10px;
+}
+
+.component-row.has-inline-progress,
+.component-row.has-inline-activity {
+  padding-bottom: 18px;
+}
+
+.component-row.has-inline-activity {
+  animation: componentActivityPulse 1.8s ease-in-out infinite;
+}
+
+.component-row:last-child {
+  border-bottom: 0;
+}
+
+.component-icon {
+  grid-area: icon;
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.code-icon {
+  font-size: 16px;
+}
+
+.component-text {
+  grid-area: text;
+  min-width: 0;
+}
+
+.component-name {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.15;
+  font-weight: 800;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.component-description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.component-version {
+  grid-area: version;
+  min-width: 0;
+  color: var(--text);
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.primary-button {
+  grid-area: button;
+  justify-self: end;
+  min-width: 92px;
+  height: 34px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 9px;
+  color: #fff;
+  background: var(--accent);
+  box-shadow: 0 8px 18px rgba(255, 149, 0, 0.18);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #ffa51f;
+}
+
+.primary-button:active {
+  transform: translateY(1px);
+  background: #e88900;
+}
+
+.primary-button:disabled {
+  opacity: 0.55;
+  cursor: default;
+  transform: none;
+}
+
+.primary-button.loading::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
+}
+
+.checkbox-row {
+  grid-area: check;
+  justify-self: end;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.checkbox-row input {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.component-progress {
+  grid-area: progress;
+  align-self: start;
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-5px);
+  pointer-events: none;
+  transition:
+    grid-template-rows 220ms ease,
+    opacity 160ms ease,
+    transform 180ms ease;
+}
+
+.component-progress.is-visible {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.progress-content {
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.component-progress.shows-activity .progress-content::after {
+  content: "";
+  display: block;
+  height: 2px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: translateX(-35%) scaleX(0.35);
+  animation: activitySweep 1.15s ease-in-out infinite;
+}
+
+.progress-header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-label {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.download-controls {
+  justify-self: end;
+  display: none;
+  align-items: center;
+  gap: 7px;
+  min-width: max-content;
+}
+
+.component-progress.shows-progress .download-controls {
+  display: inline-flex;
+}
+
+.component-progress.shows-activity .download-controls {
+  display: none;
+}
+
+.download-button {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 149, 0, 0.18);
+  color: #ffb04a;
+  box-shadow: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 120ms ease;
+}
+
+.download-button:hover {
+  background: rgba(255, 149, 0, 0.28);
+  color: #ffd6a0;
+  box-shadow: none;
+}
+
+.download-button:focus-visible {
+  outline: 2px solid rgba(255, 149, 0, 0.62);
+  outline-offset: 2px;
+}
+
+.download-button svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.download-button.is-paused {
+  background: rgba(255, 149, 0, 0.20);
+  color: #ffc071;
+}
+
+.download-button.is-paused:hover {
+  background: rgba(255, 149, 0, 0.31);
+  color: #ffe0b2;
+}
+
+.download-button.pressed,
+.download-button:active {
+  transform: translateY(1px) scale(0.96);
+  background: rgba(255, 149, 0, 0.36);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.download-button.is-paused.pressed,
+.download-button.is-paused:active {
+  background: rgba(255, 149, 0, 0.42);
+  color: #ffffff;
+}
+
+.progress-track {
+  height: 0;
+  margin-top: 0;
+  opacity: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+  transform: scaleX(0.94);
+  transform-origin: left center;
+  transition:
+    height 190ms ease,
+    margin-top 190ms ease,
+    opacity 160ms ease,
+    transform 220ms ease;
+}
+
+.component-progress.shows-progress .progress-track {
+  height: 7px;
+  margin-top: 8px;
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.hidden {
+  display: none !important;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes componentActivityPulse {
+  0%, 100% { background-color: rgba(255, 149, 0, 0.035); }
+  50% { background-color: rgba(255, 149, 0, 0.075); }
+}
+
+@keyframes activitySweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-35%) scaleX(0.35);
+  }
+  20%, 80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(135%) scaleX(0.35);
+  }
+}
+
+body.layout-width-tight .component-row {
+  grid-template-columns: 48px minmax(0, 1fr) 92px minmax(86px, max-content);
+  grid-template-areas:
+    "icon text button check"
+    "icon version button check"
+    "progress progress progress progress";
+  gap: 16px;
+  row-gap: 0;
+}
+
+body.layout-width-tight .component-row.has-inline-status {
+  row-gap: 8px;
+}
+
+body.layout-width-tight .component-icon {
+  grid-area: icon;
+}
+
+body.layout-width-tight .component-text {
+  grid-area: text;
+}
+
+body.layout-width-tight .component-version {
+  grid-area: version;
+  display: block;
+  margin-top: 6px;
+  text-align: left;
+  font-size: 19px;
+}
+
+body.layout-width-tight .primary-button {
+  grid-area: button;
+  justify-self: end;
+}
+
+body.layout-width-tight .checkbox-row {
+  grid-area: check;
+  justify-self: end;
+}
+
+body.layout-width-tight .updates-header {
+  grid-template-columns: 1fr;
+  align-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: auto;
+}
+
+body.layout-width-tight .updates-subtitle {
+  text-align: left;
+}
+
+body.layout-width-tight .updates-card {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+body.layout-width-tight .titlebar-card,
+body.layout-width-stack .titlebar-card,
+body.layout-width-min .titlebar-card {
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: center;
+  align-content: center;
+}
+
+body.layout-width-tight .title-copy,
+body.layout-width-stack .title-copy,
+body.layout-width-min .title-copy {
+  padding-left: 0;
+  border-left: 0;
+}
+
+body.layout-width-stack .component-row {
+  grid-template-columns: 46px minmax(0, 1fr);
+  grid-template-areas:
+    "icon text"
+    "icon version"
+    "button check"
+    "progress progress";
+  row-gap: 9px;
+  column-gap: 14px;
+}
+
+body.layout-width-stack .component-row.has-inline-status {
+  row-gap: 9px;
+}
+
+body.layout-width-stack .component-icon {
+  grid-area: icon;
+  width: 46px;
+  height: 46px;
+}
+
+body.layout-width-stack .component-text {
+  grid-area: text;
+}
+
+body.layout-width-stack .component-version {
+  grid-area: version;
+  display: block;
+  margin-top: 0;
+  text-align: left;
+  font-size: 18px;
+}
+
+body.layout-width-stack .primary-button {
+  grid-area: button;
+  justify-self: start;
+}
+
+body.layout-width-stack .checkbox-row {
+  grid-area: check;
+  justify-self: end;
+}
+
+body.layout-width-min .update-shell {
+  overflow-x: auto;
+}
+
+body.layout-width-min .titlebar-card,
+body.layout-width-min .summary-card,
+body.layout-width-min .updates-card {
+  min-width: 520px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --line: rgba(0, 0, 0, 0.10);
+    --line-strong: rgba(0, 0, 0, 0.16);
+    --text: rgba(0, 0, 0, 0.88);
+    --muted: rgba(0, 0, 0, 0.58);
+    --accent: #ff9500;
+    --accent-soft: rgba(255, 149, 0, 0.13);
+    --accent-border: rgba(255, 149, 0, 0.34);
+  }
+
+  html {
+    background:
+      radial-gradient(circle at 8% 0%, rgba(255, 149, 0, 0.13), transparent 30%),
+      linear-gradient(180deg, #f8f7f4 0%, #ebe9e4 100%);
+  }
+
+  .titlebar-card,
+  .summary-card,
+  .updates-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 245, 241, 0.96));
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
+  }
+
+  .progress-track {
+    background: rgba(0, 0, 0, 0.10);
+  }
+
+  .update-shell::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.22);
+  }
+
+  .primary-button {
+    color: #ffffff;
+  }
+
+  .download-button {
+    background: rgba(255, 149, 0, 0.18);
+    color: #8f4800;
+    box-shadow: none;
+  }
+
+  .download-button:hover {
+    background: rgba(255, 149, 0, 0.28);
+    color: #6f3800;
+    box-shadow: none;
+  }
+
+  .download-button.is-paused {
+    background: rgba(255, 149, 0, 0.20);
+    color: #7b3f00;
+  }
+
+  .download-button.is-paused:hover {
+    background: rgba(255, 149, 0, 0.32);
+    color: #552b00;
+  }
+
+  .download-button.pressed,
+  .download-button:active {
+    background: rgba(255, 149, 0, 0.36);
+    color: #5c2f00;
+    box-shadow: none;
+  }
+
+  .download-button.is-paused.pressed,
+  .download-button.is-paused:active {
+    background: rgba(255, 149, 0, 0.43);
+    color: #3f2100;
+  }
+}
+
+
+/* SVG component icons:
+   Use the SVG files as masks so their color follows --accent.
+   This avoids black oversized <img> rendering and keeps the original icon boxes. */
+.summary-icon,
+.component-icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-icon::before,
+.component-icon::before {
+  content: "";
+  display: block;
+  width: 26px;
+  height: 26px;
+  background: var(--accent);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.icon-app::before {
+  width: 26px;
+  height: 26px;
+  -webkit-mask-image: url("../../assets/application.svg");
+  mask-image: url("../../assets/application.svg");
+}
+
+.icon-electron::before {
+  width: 30px;
+  height: 30px;
+  -webkit-mask-image: url("../../assets/electron.svg");
+  mask-image: url("../../assets/electron.svg");
+}
+
+.icon-package::before {
+  width: 28px;
+  height: 28px;
+  -webkit-mask-image: url("../../assets/package.svg");
+  mask-image: url("../../assets/package.svg");
+}
+
+.icon-python::before {
+  width: 30px;
+  height: 24px;
+  -webkit-mask-image: url("../../assets/python.svg");
+  mask-image: url("../../assets/python.svg");
+}
+
+
+/* Externalized Label Studio wordmark for the update window header.
+   Logo.svg is now only the left mark; the text is normal HTML text. */
+.app-logo.brand-logo {
+  width: 230px;
+  max-width: 100%;
+  max-height: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  overflow: visible;
+  color: var(--text);
+  object-fit: unset;
+  object-position: initial;
+}
+
+.app-logo.brand-logo .brand-mark {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: block;
+  object-fit: contain;
+}
+
+.app-logo.brand-logo .brand-wordmark {
+  flex: 0 0 auto;
+  color: currentColor;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}

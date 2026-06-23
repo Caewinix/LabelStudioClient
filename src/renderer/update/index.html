@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self';"
+  />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Check for Updates</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="update-shell">
+    <section class="titlebar-card" aria-label="Update window header">
+      <div class="app-logo brand-logo" aria-label="Label Studio"><img class="brand-mark" src="../../assets/logo.svg" alt="" /><span class="brand-wordmark">Label Studio</span></div>
+      <div class="title-copy">
+        <h1>Check for Updates</h1>
+        <p>Manage the embedded Electron, package, and Python environment.</p>
+      </div>
+    </section>
+
+    <section class="summary-card" aria-label="Application Version">
+      <div class="summary-main">
+        <div class="summary-icon icon-app" aria-hidden="true"></div>
+        <div class="summary-text">
+          <div class="label">Application</div>
+          <div id="appVersion" class="app-version">Loading…</div>
+          <div class="subtext">Current Client Version</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="updates-card" aria-label="Components">
+      <header class="updates-header">
+        <div class="updates-title">Components</div>
+        <div class="updates-subtitle">Components are indispensable for this client.</div>
+      </header>
+
+      <div class="component-list">
+        <section class="component-row" data-runtime="electron" aria-label="Electron Runtime">
+          <div class="component-icon icon-electron" aria-hidden="true"></div>
+          <div class="component-text">
+            <div class="component-name">Electron</div>
+            <div class="component-description">App Runtime</div>
+          </div>
+          <div id="electronVersion" class="component-version">Loading…</div>
+          <button id="electronCheck" class="primary-button" type="button">Check</button>
+          <label class="checkbox-row">
+            <input id="autoElectron" type="checkbox" />
+            <span>Auto-check</span>
+          </label>
+          <div id="electronProgressPanel" class="progress-card component-progress" aria-live="polite" aria-hidden="true">
+            <div class="progress-content">
+              <div class="progress-header">
+                <div id="electronStatus" class="status-label" hidden></div>
+                <div class="download-controls">
+                  <button id="electronPause" class="download-button" type="button" title="Pause download" hidden></button>
+                  <button id="electronCancel" class="download-button" type="button" title="Cancel download" hidden></button>
+                </div>
+              </div>
+              <div class="progress-track">
+                <div id="electronProgressFill" class="progress-fill"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="component-row" data-runtime="package" aria-label="Label Studio PyPi Package">
+          <div class="component-icon icon-package" aria-hidden="true"></div>
+          <div class="component-text">
+            <div class="component-name">Package</div>
+            <div class="component-description">Label Studio PyPi Package</div>
+          </div>
+          <div id="packageVersion" class="component-version">Loading…</div>
+          <button id="packageCheck" class="primary-button" type="button">Check</button>
+          <label class="checkbox-row">
+            <input id="autoPackage" type="checkbox" />
+            <span>Auto-check</span>
+          </label>
+          <div id="packageProgressPanel" class="progress-card component-progress" aria-live="polite" aria-hidden="true">
+            <div class="progress-content">
+              <div class="progress-header">
+                <div id="packageStatus" class="status-label" hidden></div>
+                <div class="download-controls">
+                  <button id="packagePause" class="download-button" type="button" title="Pause download" hidden></button>
+                  <button id="packageCancel" class="download-button" type="button" title="Cancel download" hidden></button>
+                </div>
+              </div>
+              <div class="progress-track">
+                <div id="packageProgressFill" class="progress-fill"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="component-row" data-runtime="python" aria-label="Python Environment">
+          <div class="component-icon icon-python" aria-hidden="true"></div>
+          <div class="component-text">
+            <div class="component-name">Python</div>
+            <div class="component-description">Embedded Environment</div>
+          </div>
+          <div id="pythonVersion" class="component-version">Loading…</div>
+          <button id="pythonCheck" class="primary-button" type="button">Check</button>
+          <label class="checkbox-row">
+            <input id="autoPython" type="checkbox" />
+            <span>Auto-check</span>
+          </label>
+          <div id="pythonProgressPanel" class="progress-card component-progress" aria-live="polite" aria-hidden="true">
+            <div class="progress-content">
+              <div class="progress-header">
+                <div id="pythonStatus" class="status-label" hidden></div>
+                <div class="download-controls">
+                  <button id="pythonPause" class="download-button" type="button" title="Pause download" hidden></button>
+                  <button id="pythonCancel" class="download-button" type="button" title="Cancel download" hidden></button>
+                </div>
+              </div>
+              <div class="progress-track">
+                <div id="pythonProgressFill" class="progress-fill"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="./renderer.js"></script>
+</body>
+</html>
