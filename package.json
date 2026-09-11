@@ -4,14 +4,15 @@
     "description": "Electron + TypeScript conversion of the Swift Label Studio launcher. Chromium/CEF runtime logic is replaced by Electron runtime checking.",
     "main": "dist/main/main.js",
     "scripts": {
-        "build": "rm -rf dist/renderer && node ./node_modules/typescript/lib/tsc.js -p tsconfig.json && find src/renderer -type f \\( -name '*.html' -o -name '*.css' \\) -exec sh -c 'mkdir -p dist/renderer/$(dirname \"${1#src/renderer/}\") && cp \"$1\" dist/renderer/${1#src/renderer/}' _ {} \\; && rm -rf dist/assets dist/python dist/Assets dist/Python && cp -R assets dist/assets && mkdir -p dist/python && find Python -maxdepth 1 -type f -name '*.py' -exec cp {} dist/python/ \\;",
-        "start": "node scripts/brand-dev-electron.js && npm run build && electron .",
+        "build": "node scripts/build.js",
+        "start": "node scripts/run-start.js",
         "dev": "npm run start",
         "typecheck": "node ./node_modules/typescript/lib/tsc.js -p tsconfig.json --noEmit",
+        "build:windows-installer": "node scripts/build-windows-installer.js",
         "pack:mac": "npm run build && node scripts/run-electron-builder.js --mac dir --universal",
         "dist:mac": "npm run build && node scripts/run-electron-builder.js --mac dmg --universal",
-        "pack:win": "npm run build && node scripts/run-electron-builder.js --win dir",
-        "dist:win": "npm run build && node scripts/run-electron-builder.js --win nsis",
+        "pack:win": "node scripts/run-windows-package.js dir",
+        "dist:win": "node scripts/run-windows-package.js nsis",
         "pack:linux": "npm run build && node scripts/run-electron-builder.js --linux dir",
         "dist:linux": "npm run build && node scripts/run-electron-builder.js --linux tar.gz",
         "pack:all": "npm run pack:mac && npm run pack:win && npm run pack:linux",
@@ -20,8 +21,9 @@
     },
     "devDependencies": {
         "@types/node": "^22.13.14",
+        "@types/tar-stream": "^3.1.4",
         "electron": "37.10.3",
-        "electron-builder": "^26.0.12",
+        "electron-builder": "26.0.12",
         "typescript": "^5.8.3"
     },
     "build": {
@@ -32,6 +34,8 @@
         },
         "files": [
             "dist/**/*",
+            "!dist/scripts/**/*",
+            "!dist/windows-installer/**/*",
             "icons/**/*",
             "package.json"
         ],
@@ -58,8 +62,8 @@
                     "to": "Assets"
                 },
                 {
-                    "from": "Python",
-                    "to": "Python"
+                    "from": "dist/scripts",
+                    "to": "Scripts"
                 }
             ]
         },
@@ -71,10 +75,22 @@
                     "to": "assets"
                 },
                 {
-                    "from": "python",
-                    "to": "python"
+                    "from": "dist/scripts",
+                    "to": "scripts"
+                },
+                {
+                    "from": "dist/windows-installer/${arch}/Label Studio Installer.exe",
+                    "to": "installer/Label Studio Installer.exe"
                 }
             ]
+        },
+        "nsis": {
+            "oneClick": false,
+            "perMachine": true,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "shortcutName": "Label Studio"
         },
         "linux": {
             "icon": "icons/linux/logo.svg",
@@ -92,10 +108,14 @@
                     "to": "assets"
                 },
                 {
-                    "from": "python",
-                    "to": "python"
+                    "from": "dist/scripts",
+                    "to": "scripts"
                 }
             ]
         }
+    },
+    "dependencies": {
+        "tar-stream": "^3.2.0",
+        "unbzip2-stream": "^1.4.3"
     }
 }

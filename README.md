@@ -15,6 +15,7 @@ Electron version of the Label Studio desktop launcher.
 - Node.js 18 or newer
 - npm
 - Platform build tools required by `electron-builder`
+- .NET 8 SDK when building Windows packages (used to publish the self-contained installer executable)
 - On macOS, code signing/notarization credentials if you want signed distribution builds
 
 ## Install
@@ -51,6 +52,10 @@ npm run pack:win
 npm run dist:win
 ```
 
+Both Windows commands build and bundle `Label Studio Installer.exe`. With no architecture argument they use the build machine architecture. Select one explicitly with `npm run pack:win -- --x64`, `--arm64` (or `--arm`), or `--ia32` (or `--x86`); `dist:win` accepts the same arguments. Multiple architecture flags build all requested targets. On Windows, `npm start` also builds the installer for the current architecture before launching Electron.
+
+The installer is self-contained, so end users do not need to install .NET. Its C# implementation owns UAC elevation, named-pipe coordination, transactional Electron file replacement, rollback, and app restart directly; it does not invoke PowerShell.
+
 ### Linux
 
 ```bash
@@ -77,7 +82,7 @@ The app keeps runtime and download data in local cache directories under the pro
 
 - Python runtime downloads
 - Electron runtime downloads
-- Package and wheelhouse downloads
+- Package downloads and pip cache
 
 The packaged app resources are copied into the generated `.app` or platform distribution output by `electron-builder`.
 
