@@ -57,34 +57,13 @@ Both Windows commands build and bundle `Label Studio Installer.exe`. With no arc
 The installer is self-contained, so end users do not need to install .NET. Its C# implementation owns UAC elevation, named-pipe coordination, transactional Electron file replacement, rollback, and app restart directly; it does not invoke PowerShell.
 
 ### Linux
-
-```bash
-npm run pack:linux
-npm run dist:linux
-```
-
-### Build All Targets
-
-```bash
-npm run pack:all
-npm run dist:all
-```
+Comming soon...
 
 ## Scripts
 
 - `npm run build` - compile TypeScript and copy renderer/assets
 - `npm run typecheck` - run TypeScript type checking only
 - `npm run clean` - remove build output, caches, and installed dependencies
-
-## Runtime Layout
-
-The app keeps runtime and download data in local cache directories under the project/app support locations. The bootstrap flow manages separate cache areas for:
-
-- Python runtime downloads
-- Electron runtime downloads
-- Package downloads and pip cache
-
-The packaged app resources are copied into the generated `.app` or platform distribution output by `electron-builder`.
 
 ## Project Structure
 
@@ -94,12 +73,3 @@ The packaged app resources are copied into the generated `.app` or platform dist
 - `python` - embedded runtime launcher scripts
 - `assets` - shared UI assets
 - `icons` - platform icons used by packaging
-
-## Notes
-
-- The macOS packaging flow is configured to build a universal app.
-- The project is intentionally close to the original launcher behavior, but implemented in Electron/TypeScript.
-
-## License
-
-No license file is included in this repository snapshot.
