@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../windows-installer/Diagnostics.cs" Link="Diagnostics.cs" />
+    <Compile Include="../windows-installer/ManagedRuntimeProcessTerminator.cs" Link="ManagedRuntimeProcessTerminator.cs" />
+    <Compile Include="../windows-installer/RuntimeReplacementOptions.cs" Link="RuntimeReplacementOptions.cs" />
+    <Compile Include="../windows-installer/ManagedRuntimeReplacement.cs" Link="ManagedRuntimeReplacement.cs" />
+    <Compile Include="../windows-installer/RuntimeFileTransaction.cs" Link="RuntimeFileTransaction.cs" />
+    <Compile Include="../windows-installer/WindowsRuntimeLockInspector.cs" Link="WindowsRuntimeLockInspector.cs" />
+    <Compile Include="../windows-installer/ManagedPackageReplacement.cs" Link="ManagedPackageReplacement.cs" />
+    <Compile Include="../windows-installer/PackageFileTransaction.cs" Link="PackageFileTransaction.cs" />
+    <Compile Include="../windows-installer/WindowsFilePrivilegeScope.cs" Link="WindowsFilePrivilegeScope.cs" />
+  </ItemGroup>
+</Project>

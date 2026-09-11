@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <AssemblyName>Label Studio Installer</AssemblyName>
+    <RootNamespace>LabelStudio.Installer</RootNamespace>
+    <ApplicationIcon>../../icons/logo.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Title>Label Studio Installer</Title>
+    <Product>Label Studio</Product>
+    <Description>Installs prepared Label Studio runtime updates.</Description>
+    <Company>Label Studio</Company>
+  </PropertyGroup>
+</Project>
