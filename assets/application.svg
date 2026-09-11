@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="27.8222mm" height="27.8222mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 2782.22 2782.22"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:black;stroke-width:282.22;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256}
+    .fil0 {fill:none}
+   ]]>
+  </style>
+ </defs>
+<g>
+  <line class="fil0 str0" x1="2641.11" y1="2072.98" x2="2300.18" y2= "2072.98" />
+  <line class="fil0 str0" x1="1732.04" y1="2072.98" x2="141.11" y2= "2072.98" />
+  <line class="fil0 str0" x1="1732.04" y1="141.1" x2="141.11" y2= "2641.12" />
+  <line class="fil0 str0" x1="1050.18" y1="141.1" x2="2641.11" y2= "2641.12" />
+</g>
+</svg>
